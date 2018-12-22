@@ -41,9 +41,6 @@ module WeixinAuthorize
     end
 
 
-    def auth_access_token(openid)
-      WeixinAuthorize.http_get_without_token("/sns/auth?access_token=#{get_access_token}&openid=#{openid}", {}, )
-    end
 
     # 检查appid和app_secret是否有效。
     def is_valid?

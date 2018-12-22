@@ -3,6 +3,12 @@ module WeixinAuthorize
   module Api
     module Oauth
 
+
+      def jscode2session(code)
+        WeixinAuthorize.http_get_without_token("/sns/jscode2session?appid=#{app_id}&secret=#{app_secret}&js_code=#{code}&grant_type=authorization_code", {},"api" )
+      end
+
+
       # 网站应用微信登录授权URL
       # 文档：http://t.cn/RyZVWEY
       def qrcode_authorize_url(redirect_uri, scope="snsapi_login", state="web_wx_login")
@@ -34,6 +40,10 @@ module WeixinAuthorize
         WeixinAuthorize.http_get_without_token("/sns/oauth2/refresh_token?appid=#{app_id}&grant_type=refresh_token&refresh_token=#{refresh_token}", {}, "api")
       end
 
+
+      def auth_access_token(oauth_token,openid)
+        WeixinAuthorize.http_get_without_token("/sns/auth?access_token=#{oauth_token}&openid=#{openid}", {},"api" )
+      end
 
 
       # 如果网页授权作用域为snsapi_userinfo，则此时开发者可以通过access_token和openid拉取用户信息了。

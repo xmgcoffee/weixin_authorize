@@ -29,6 +29,16 @@ module WeixinAuthorize
         http_post("/message/template/send", msg)
       end
 
+
+      # 发送模板消息
+      def send_wxopen_template_msg(touser, template_id, page, form_id, data)
+        msg = {
+            touser: touser, template_id: template_id,
+            page: page, form_id: form_id, data: data
+        }
+        http_post("/message/wxopen/template/send", msg)
+      end
+
     end
   end
 end
