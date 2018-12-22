@@ -40,6 +40,11 @@ module WeixinAuthorize
       synchronize{ token_store.access_token }
     end
 
+
+    def auth_access_token(openid)
+      WeixinAuthorize.http_get_without_token("/sns/auth?access_token=#{get_access_token}&openid=#{openid}", {}, )
+    end
+
     # 检查appid和app_secret是否有效。
     def is_valid?
       return true if !custom_access_token.nil?

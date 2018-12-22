@@ -34,6 +34,8 @@ module WeixinAuthorize
         WeixinAuthorize.http_get_without_token("/sns/oauth2/refresh_token?appid=#{app_id}&grant_type=refresh_token&refresh_token=#{refresh_token}", {}, "api")
       end
 
+
+
       # 如果网页授权作用域为snsapi_userinfo，则此时开发者可以通过access_token和openid拉取用户信息了。
       def get_oauth_userinfo(openid, oauth_token, lang="zh_CN")
         WeixinAuthorize.http_get_without_token("/sns/userinfo?access_token=#{oauth_token}&openid=#{openid}&lang=#{lang}", {}, "api")
