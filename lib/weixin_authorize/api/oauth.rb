@@ -8,6 +8,19 @@ module WeixinAuthorize
         WeixinAuthorize.http_get_without_token("/sns/jscode2session?appid=#{app_id}&secret=#{app_secret}&js_code=#{code}&grant_type=authorization_code", {},"api" )
       end
 
+      def wx_biz_decrypt(session_key,encrypted_data,iv)
+        key = Base64.decode64(session_key)
+        encrypted_data = Base64.decode64(encrypted_data)
+        iv = Base64.decode64(iv)
+        cipher = OpenSSL::Cipher::AES128.new(:CBC)
+        cipher.decrypt
+        cipher.key = key
+        cipher.iv  = iv
+        cipher.padding = 0
+        decrypted_plain_text = cipher.update(encrypted_data) + cipher.final
+        decrypted_plain_text = decrypted_plain_text.strip.gsub(/[\u0000-\u001F\u2028\u2029]/, '')
+        JSON.parse(decrypted_plain_text)
+      end
 
       # 网站应用微信登录授权URL
       # 文档：http://t.cn/RyZVWEY
